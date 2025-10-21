@@ -1,0 +1,281 @@
+/* =========================
+   SignIn.css (improved)
+   ========================= */
+
+/* Design tokens (shared vibe) */
+:root {
+  --bg: #0b0f14;
+  --card: #121821;
+  --text: #e8eef6;
+  --muted: #9fb2c8;
+  --accent: #5b9cff;
+  --accent-pressed: #3f7fe6;
+  --ring: rgba(91, 156, 255, 0.5);
+  --error: #ff6b6b;
+  --radius: 14px;
+  --shadow: 0 14px 40px rgba(0,0,0,0.35);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f6f8fc;
+    --card: #ffffff;
+    --text: #0b1220;
+    --muted: #5c6b7a;
+    --accent: #3b82f6;
+    --accent-pressed: #2563eb;
+    --ring: rgba(59, 130, 246, 0.45);
+    --shadow: 0 14px 40px rgba(16, 24, 40, 0.1);
+  }
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  background:
+    radial-gradient(1200px 800px at 20% -20%, rgba(91,156,255,0.15), transparent),
+    radial-gradient(1000px 600px at 110% 20%, rgba(91,156,255,0.08), transparent),
+    var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.45;
+}
+
+/* Center the card */
+.sign-in-container {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 40px 16px;
+}
+
+/* Card */
+.sign-in-form {
+  width: 100%;
+  max-width: 420px;
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px;
+}
+
+/* Title */
+.sign-in-form h2 {
+  margin: 0 0 18px;
+  font-size: 1.65rem;
+  letter-spacing: 0.2px;
+}
+
+/* Inputs */
+.sign-in-form input {
+  display: block;
+  width: 100%;
+  margin-bottom: 14px;
+  padding: 13px 14px;
+  background: rgba(255,255,255,0.02);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease, transform 80ms ease;
+}
+
+.sign-in-form input::placeholder { color: var(--muted); }
+
+.sign-in-form input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--ring);
+  background-color: rgba(91,156,255,0.06);
+}
+
+.sign-in-form input:active { transform: scale(0.998); }
+
+/* Autofill fix (Chrome) */
+input:-webkit-autofill {
+  -webkit-text-fill-color: var(--text);
+  -webkit-box-shadow: 0 0 0 30px var(--card) inset !important;
+  box-shadow: 0 0 0 30px var(--card) inset !important;
+}
+
+/* Primary button */
+.sign-in-button {
+  width: 100%;
+  margin-top: 6px;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 12px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-pressed));
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: transform 120ms ease, filter 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 8px 20px rgba(59,130,246,0.35);
+}
+
+.sign-in-button:hover { filter: brightness(1.05); }
+.sign-in-button:active { transform: translateY(1px) scale(0.995); }
+.sign-in-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Link + divider */
+.sign-in-form a {
+  display: inline-block;
+  margin: 12px 0 10px;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+.sign-in-form a:hover { text-decoration: underline; }
+
+.sign-in-form hr {
+  border: none;
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+  margin: 16px 0;
+  position: relative;
+}
+.sign-in-form hr::after {
+  content: "or";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  padding: 0 10px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  background: var(--card);
+}
+
+/* Secondary button (outline) */
+.create-account-button {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: transparent;
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease, transform 80ms ease;
+  text-align: center;             /* if you render it as a Link */
+  display: inline-block;          /* works for <a>/<Link> too */
+}
+
+.create-account-button:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+.create-account-button:active { transform: translateY(1px) scale(0.995); }
+
+/* Error helper (optional) */
+.input-error {
+  border-color: var(--error) !important;
+  box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.25) !important;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .sign-in-button,
+  .create-account-button,
+  .sign-in-form input { transition: none; }
+}
+
+/* ——— Make Sign In card a little wider ——— */
+.sign-in-form {
+  max-width: 520px;     /* was ~420–440px; bump to 520px */
+  padding: 32px;        /* breathe a bit more */
+}
+
+/* Slightly larger inputs to match the width */
+.sign-in-form input {
+  padding: 14px 16px;
+  font-size: 1rem;
+}
+
+/* Wider on roomy screens only (optional) */
+@media (min-width: 900px) {
+  .sign-in-form { max-width: 560px; }
+}
+
+/* ——— Make Sign In form wider ——— */
+.sign-in-form {
+  max-width: 640px;   /* wider than before (try 600–700px if you want even larger) */
+  width: 100%;
+  padding: 36px 40px; /* extra breathing space inside */
+}
+
+/* Optional: slightly increase input and button sizing for visual balance */
+.sign-in-form input,
+.sign-in-button,
+.create-account-button {
+  font-size: 1rem;
+  padding: 14px 18px;
+}
+
+/* 1) Never let the page scroll sideways */
+html, body { overflow-x: hidden; }
+
+/* 2) Keep the form inside the viewport width on small screens */
+.sign-in-form {
+  max-width: min(100%, 640px);  /* respects small viewports */
+  width: 100%;
+  padding: clamp(24px, 4vw, 40px);
+}
+
+/* 3) Make sure inputs don’t cause layout overflow in any flex/grid context */
+.sign-in-form input {
+  min-width: 0;                 /* critical when nested in flex/grid containers */
+  width: 100%;
+}
+
+/* 4) Avoid tiny scale transforms that can clip text on some mobile browsers */
+.sign-in-form input:active { transform: none; }
+
+/* —— Make all fields truly full width inside the card —— */
+.sign-in-form {
+  max-width: 640px;     /* or 700px if you prefer even wider */
+  width: 100%;
+}
+
+.sign-in-form input,
+.sign-in-form .sign-in-button,
+.sign-in-form .create-account-button {
+  display: block;
+  width: 100% !important;     /* override any inherited caps */
+  max-width: none !important;  /* kill lingering max-widths */
+  min-width: 0;                /* prevents flex/grid overflow clipping */
+  box-sizing: border-box;
+}
+
+/* If "Create New Account" is a <Link>/<a>, make it block-level so it fills width */
+.sign-in-form .create-account-button {
+  display: block;
+  text-align: center;
+}
+
+/* ——— Wider Sign-In Form ——— */
+.sign-in-form {
+  max-width: 720px;     /* increase overall width — you can push this up to 800px if desired */
+  width: 100%;
+  padding: 40px 48px;   /* add breathing room inside */
+  margin: 0 auto;       /* keep it centered */
+}
+
+/* Make sure all inner fields stretch across */
+.sign-in-form input,
+.sign-in-button,
+.create-account-button {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}

@@ -1,0 +1,270 @@
+/* =========================
+   SignUp.css (complete)
+   ========================= */
+
+/* Design tokens */
+:root {
+  --bg: #0b0f14;
+  --card: #121821;
+  --text: #e8eef6;
+  --muted: #9fb2c8;
+  --accent: #5b9cff;
+  --accent-pressed: #3f7fe6;
+  --ring: rgba(91, 156, 255, 0.5);
+  --error: #ff6b6b;
+  --radius: 12px;
+  --shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f6f8fc;
+    --card: #ffffff;
+    --text: #0b1220;
+    --muted: #5c6b7a;
+    --accent: #3b82f6;
+    --accent-pressed: #2563eb;
+    --ring: rgba(59, 130, 246, 0.45);
+    --shadow: 0 10px 30px rgba(16, 24, 40, 0.1);
+  }
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  background:
+    radial-gradient(1200px 800px at 20% -20%, rgba(91,156,255,0.15), transparent),
+    radial-gradient(1000px 600px at 110% 20%, rgba(91,156,255,0.08), transparent),
+    var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.4;
+}
+
+/* Center the form card */
+.sign-up-container {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 32px 16px;
+}
+
+/* Card/form */
+.sign-up-form {
+  width: 100%;
+  max-width: 480px;
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px;
+}
+
+.sign-up-form h2 {
+  margin: 0 0 16px;
+  font-size: 1.5rem;
+  letter-spacing: 0.2px;
+}
+
+/* Base input & label styling */
+.sign-up-form label,
+.sign-up-form input,
+.sign-up-form select {
+  display: block;
+  width: 100%;
+}
+
+.sign-up-form label {
+  margin: 14px 0 8px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.sign-up-form input,
+.sign-up-form select {
+  margin-bottom: 12px;
+  padding: 12px 14px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+  box-sizing: border-box;
+}
+
+.sign-up-form input::placeholder { color: var(--muted); }
+
+.sign-up-form input:focus,
+.sign-up-form select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--ring);
+  background-color: rgba(91,156,255,0.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sign-up-form input,
+  .sign-up-form select,
+  .sign-up-button { transition: none; }
+}
+
+/* Name row: 1 col on mobile, 2 cols >=520px */
+.name {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 10px 0 6px;
+}
+@media (min-width: 520px) {
+  .name { grid-template-columns: 1fr 1fr; }
+}
+
+/* ===== Birthday (label.dob): text on line 1, selects on line 2 filling width ===== */
+.sign-up-form > label.dob {
+  display: grid;
+  grid-template-rows: auto auto;            /* row 1: "Birthday?" text, row 2: selects */
+  grid-template-columns: repeat(3, 1fr);    /* 3 equal columns */
+  row-gap: 8px;
+  column-gap: 8px;
+}
+
+.sign-up-form > label.dob > select {
+  grid-row: 2;          /* force selects into the second row */
+  width: 100%;
+  margin: 0;
+  height: 40px;
+  padding: 8px 12px;
+  box-sizing: border-box;
+  appearance: none;
+}
+
+/* Explicit column placement (stable order) */
+.sign-up-form > label.dob > select:nth-of-type(1) { grid-column: 1; }
+.sign-up-form > label.dob > select:nth-of-type(2) { grid-column: 2; }
+.sign-up-form > label.dob > select:nth-of-type(3) { grid-column: 3; }
+
+/* If you prefer Month wider than Day, swap to:
+.sign-up-form > label.dob { grid-template-columns: 2fr 1fr 2fr; }
+*/
+
+/* ===== Gender (clickable pills) ===== */
+/* container */
+.sign-up-form .gender {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* each pill is a label so the whole block is clickable */
+.sign-up-form .gender-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  user-select: none;
+  color: var(--text);
+  position: relative;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+/* hide the native radio visually but keep it accessible */
+.sign-up-form .gender-option > input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* selected + focus states (modern) */
+.sign-up-form .gender-option:has(input[type="radio"]:checked) {
+  border-color: var(--accent);
+  background-color: rgba(91,156,255,0.08);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+.sign-up-form .gender-option:has(input[type="radio"]:focus-visible) {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+/* hover affordance */
+.sign-up-form .gender-option:hover { border-color: var(--accent); }
+
+/* Fallback for browsers without :has() */
+@supports not (selector(:has(*))) {
+  .sign-up-form .gender-option > input[type="radio"]:checked + span {
+    position: relative;
+  }
+  .sign-up-form .gender-option > input[type="radio"]:checked + span::before {
+    content: "";
+    position: absolute;
+    inset: -10px -12px; /* extend to pill padding */
+    border-radius: 10px;
+    border: 1px solid var(--accent);
+    box-shadow: 0 0 0 3px var(--ring);
+    background-color: rgba(91,156,255,0.08);
+    z-index: -1;
+  }
+}
+
+/* stack on tiny screens */
+@media (max-width: 360px) {
+  .sign-up-form .gender { grid-template-columns: 1fr; }
+}
+
+/* Button */
+.sign-up-button {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-pressed));
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: transform 120ms ease, filter 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 6px 18px rgba(59, 130, 246, 0.35);
+}
+
+.sign-up-button:hover { filter: brightness(1.05); }
+.sign-up-button:active { transform: translateY(1px) scale(0.995); }
+.sign-up-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Link */
+.sign-up-form a {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+.sign-up-form a:hover { text-decoration: underline; }
+
+/* Helpers (optional) */
+.input-error {
+  border-color: var(--error) !important;
+  box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.25) !important;
+}
+.help-text {
+  margin-top: -8px;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.error-text {
+  color: var(--error);
+  font-size: 0.85rem;
+}
